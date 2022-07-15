@@ -1,60 +1,26 @@
-const getUserModel = (sequelize, { DataTypes }) => {
-  const User = sequelize.define("user", {
-    id: {
-      type: DataTypes.INTEGER,
-      unique: true,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
+"use strict";
+const { Model } = require("sequelize");
+module.exports = (sequelize, DataTypes) => {
+  class User extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      // define association here
+    }
+  }
+  User.init(
+    {
+      username: DataTypes.STRING,
+      email: DataTypes.STRING,
+      password: DataTypes.STRING,
     },
-    username: {
-      type: DataTypes.STRING,
-      unique: true,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-        is: /^[0-9a-f]{64}$/i,
-        min: 8,
-      },
-    },
-    createdAt: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-  });
-
-  User.associate = (models) => {
-    User.hasMany(models.Note, { onDelete: "CASCADE" });
-  };
-
-  User.findByLogin = async (login) => {
-    let user = await User.findOne({
-      where: { username: login },
-    });
-
-    return user;
-  };
-
+    {
+      sequelize,
+      modelName: "User",
+    }
+  );
   return User;
 };
-
-export default getUserModel;
