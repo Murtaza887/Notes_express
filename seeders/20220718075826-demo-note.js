@@ -17,14 +17,14 @@ module.exports = {
         {
           id: 1,
           content: "Hello World",
-          author: "user1",
+          author: 1,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           id: 2,
           content: "Hello World Again!",
-          author: "user2",
+          author: 2,
           createdAt: new Date(),
           updatedAt: new Date(),
         },

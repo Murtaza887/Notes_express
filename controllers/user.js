@@ -48,6 +48,8 @@ module.exports = {
       });
   },
 
+  getAllNotes(req, res) {},
+
   add(req, res) {
     return User.create({
       username: req.body.username,
@@ -55,6 +57,32 @@ module.exports = {
       password: req.body.password,
     })
       .then((user) => res.status(201).send(user))
+      .catch((error) => res.status(400).send(error));
+  },
+
+  update(req, res) {
+    return User.findByPk(req.body.id, {
+      include: [
+        {
+          all: true,
+        },
+      ],
+    })
+      .then((user) => {
+        if (!user) {
+          return res.status(404).send({
+            message: "User Not Found",
+          });
+        }
+        return user
+          .update({
+            username: req.body.username || user.username,
+            email: req.body.email || user.email,
+            password: req.body.password || user.password,
+          })
+          .then(() => res.status(200).send(user))
+          .catch((error) => res.status(400).send(error));
+      })
       .catch((error) => res.status(400).send(error));
   },
 

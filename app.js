@@ -20,11 +20,12 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/api/user", indexRouter);
+app.use("/api/update/user", indexRouter);
 app.use("/api/user/:id", indexRouter);
 app.use("/api/note", indexRouter);
+app.use("/api/update/note", indexRouter);
 app.use("/api/note/:id", indexRouter);
-app.use("/api/user/delete/:id", indexRouter);
-app.use("/api/note/delete/:id", indexRouter);
+app.use("/api/user/notes/:id", indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
